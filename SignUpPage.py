@@ -2,7 +2,7 @@ from random import randint
 from nicegui import ui
 import re
 
-
+#check
 #regex validation: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ 
 with ui.row().classes("w-full justify-center gap-5"):
     ui.label("SoundNimbostratus").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
