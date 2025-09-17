@@ -5,6 +5,11 @@ import re
 #check
 #regex validation: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ 
 
+#random color slider:
+# ui.slider(min=0, max=10, step=0.1, value=5).props('label-always').on('update:model-value', lambda e: ui.colors(primary=f'#{randint(0, 0xffffff):06x}'),
+#         throttle=0.01, trailing_events=False))
+
+
 with ui.row().classes("w-full justify-center gap-5"):
     ui.label("SoundNimbostratus").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
     ui.icon('savings', color='primary').classes('text-5xl')
@@ -21,9 +26,9 @@ with ui.row().classes("w-full justify-center gap-5"):
         with ui.dropdown_button('Select your gender', auto_close=True):
                 ui.item('Male', on_click=lambda: ui.notify('You clicked Male'))
                 ui.item('Female', on_click=lambda: ui.notify('You clicked Female'))
-                ui.item('Other', on_click=lambda: ui.slider(min=0, max=10, step=0.1, value=5).props('label-always').on('update:model-value', lambda e: ui.colors(primary=f'#{randint(0, 0xffffff):06x}'),
-        throttle=0.01, trailing_events=False))
-            
+                ui.item('Other', on_click=lambda: ui.notify('You clicked Other'))
     ui.button('Sign up', on_click=lambda: ui.notify('You are now signed up!'))
 
 ui.run()
+
+            
