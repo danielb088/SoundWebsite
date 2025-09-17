@@ -12,4 +12,5 @@ with ui.row().classes("w-full justify-center gap-5"):
     ui.button('Sign up', on_click=lambda: ui.notify('You are now signed up!'))
 with ui.row().classes("w-full justify-center gap-5"):
     ui.button('Forgot password', on_click=lambda: ui.notify('You are now signed up!'))
+ui.slider(min=0, max=100, value=50)
 ui.run()
