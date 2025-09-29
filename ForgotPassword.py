@@ -4,5 +4,5 @@ with ui.row().classes("w-full justify-center gap-5"):
 with ui.row().classes("w-full justify-center gap-5"):
     ui.input(placeholder="Email")
 with ui.row().classes("w-full justify-center gap-5"):    
-    ui.button("Send code", on_click= lambda: ui.notify("Code sent"))
+    ui.button("Send code", on_click= lambda: ui.notify("Code sent!!!"))
 ui.run()
