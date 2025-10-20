@@ -13,8 +13,9 @@ def HomePage_click():
 
 @ui.page('/',title="my login page",favicon="images/logo.png")
 def show_page():
-    ui.colors(primary='#ccf71f')
-    ui.image("images/logo.png")
+    with ui.row().classes("w-full justify-center"):
+        ui.colors(primary='#ccf71f')
+        ui.image("images/logo.png").classes("w-32")
 
     with ui.row().classes("w-full justify-center gap-5"):
         ui.label("Log in").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
