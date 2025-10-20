@@ -1,8 +1,9 @@
 from nicegui import ui
 
-import pages.HomePage as HomePage
-import pages.SignUpPage as SignUpPage
+import HomePage
+import SignUpPage
 import ForgotPassword
+import Statistics
 
 def SignUp_click(): 
     ui.navigate.to('/SignUp')
