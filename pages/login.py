@@ -1,7 +1,7 @@
 from nicegui import ui
 
-import HomePage
-import SignUpPage
+import pages.HomePage as HomePage
+import pages.SignUpPage as SignUpPage
 import ForgotPassword
 
 def SignUp_click(): 
