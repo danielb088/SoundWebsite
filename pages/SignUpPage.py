@@ -13,6 +13,7 @@ def HomePage_click():
 
 @ui.page("/SignUp")
 def SignUp():
+    ui.colors(primary='#ccf71f')
     with ui.row().classes("w-full justify-center gap-5"):
         with ui.card().tight():     
             ui.label("SoundNimbostratus").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')

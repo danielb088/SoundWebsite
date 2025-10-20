@@ -13,6 +13,8 @@ def HomePage_click():
 
 @ui.page('/',title="my login page")
 def show_page():
+    ui.colors(primary='#ccf71f')
+
     with ui.row().classes("w-full justify-center gap-5"):
         ui.label("Log in").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
     with ui.row().classes("w-full justify-center gap-5"):

@@ -5,6 +5,7 @@ def Statistics_click():
 
 @ui.page("/HomePage")
 def HomePage():        
+    ui.colors(primary='#ccf71f')
     with ui.card().style('width: 100%'):
         with ui.row().classes("w-full justify-center gap-5"):
             ui.button("Statistics", on_click=Statistics_click)

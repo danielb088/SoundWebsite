@@ -5,6 +5,7 @@ def HomePage_click():
 
 @ui.page('/Statistics')
 def Statistics():
+    ui.colors(primary='#ccf71f')
     ui.echart({
     'xAxis': {'type': 'value'},
     'yAxis': {'type': 'category', 'data': ['A', 'B'], 'inverse': True},
@@ -15,5 +16,5 @@ def Statistics():
     ],
     })
 
-    with ui.row():
+    with ui.row().classes('w-full justify-center'):
         ui.button("Back", on_click=HomePage_click)

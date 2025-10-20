@@ -2,6 +2,7 @@ from nicegui import ui
 
 @ui.page("/ForgotPassword")
 def ForgotPassword():    
+    ui.colors(primary='#ccf71f')
     with ui.row().classes("w-full justify-center gap-5"):
         ui.label("Enter your Email: ").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
     with ui.row().classes("w-full justify-center gap-5"):
