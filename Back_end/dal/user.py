@@ -10,3 +10,4 @@ class User(Document):
     is_admin: bool
     dob: datetime
     password: str
+
