@@ -3,10 +3,19 @@ from bunnet import Document
 from pydantic import BaseModel
 from datetime import datetime
 
+
+class UserFilter(BaseModel):
+    dob: datetime
+    admin: bool
+
+class UserLogin(BaseModel):
+    user_name: str
+    password: str
+
 class User(Document):
     id: str #this
-    f_name: str
-    l_name: str
+    first_name: str
+    last_name: str
     is_admin: bool
     dob: datetime
     password: str
