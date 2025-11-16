@@ -18,6 +18,7 @@ def api_add(user: User):
         user.save()
         return user
 
+# update
 @router.put("")
 def api_udpate(user: User):
     the_user:User = User.get(user.id).run() 
@@ -37,6 +38,15 @@ def api_delete(user_id: str):
         the_user.delete()
         return Response(status_code=status.HTTP_200_OK)
 
+# get specifc user 
+@router.get("/{user_id}")
+def api_get(user_id: str):
+    the_user:User = User.get(user_id).run() 
+    if the_user == None:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+    else:
+        return the_user
+
 
 # Login
 @router.post("/login")
@@ -52,4 +62,4 @@ def api_login(ul: UserLogin) :
 # Filter users
 @router.post("/filter")
 def api_get_filter(filter:UserFilter):
-    return User.find({'gender':filter.dob,'admin':filter.admin}).run()
+    return User.find({'dob':filter.dob,'admin':filter.admin}).run()

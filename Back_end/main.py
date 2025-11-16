@@ -5,7 +5,11 @@ from dal.songs import Songs
 from dal.db import init_db
 from fastapi import FastAPI
 import uvicorn
+
 from api.user import router as user_router
+from api.songs import router as songs_router
+from api.listens import router as listens_router
+from api.following import router as following
 
 
 if __name__ == "__main__":
