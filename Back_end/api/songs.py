@@ -1,6 +1,7 @@
 from fastapi import APIRouter,Response,status #,UploadFile
 
 from dal.songs import Songs
+from dal.user import User
 
 router = APIRouter(prefix="/songs")
 
@@ -10,21 +11,21 @@ def api_get_all():
 
 @router.post("")
 def api_add(song: Songs):
-    if Songs.get(song.id).run() != None:
+    if User.get(song.user_ID).run() != None:
         return Response(status_code=status.HTTP_400_BAD_REQUEST)
     else:
         song.save()
         return song
 
-# update
-@router.put("")
-def api_udpate(song: Songs):
-    the_song:Songs = Songs.get(song.id).run() 
-    if the_song == None:
-        return Response(status_code=status.HTTP_404_NOT_FOUND)
-    else:
-        song.save()
-        return song
+# # update
+# @router.put("")
+# def api_udpate(song: Songs):
+#     the_song:Songs = Songs.get(song.id).run() 
+#     if the_song == None:
+#         return Response(status_code=status.HTTP_404_NOT_FOUND)
+#     else:
+#         song.save()
+#         return song
     
 
 @router.delete("/{song_id}")
