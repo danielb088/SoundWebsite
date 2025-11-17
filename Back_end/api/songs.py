@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Response,status #,UploadFile
+from fastapi import APIRouter,Response,status ,UploadFile
 
 from dal.songs import Songs
 from dal.user import User
@@ -11,7 +11,7 @@ def api_get_all():
 
 @router.post("")
 def api_add(song: Songs):
-    if User.get(song.user_ID).run() != None:
+    if User.get(song.user_ID).run() == None:
         return Response(status_code=status.HTTP_400_BAD_REQUEST)
     else:
         song.save()
@@ -45,3 +45,25 @@ def api_get(song_id: str):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:
         return the_song
+
+@router.put("/file/{song_id}")
+def api_add_file(song_id: str,upload_file: UploadFile):
+    the_song:Songs = Songs.get(song_id).run() 
+    if the_song == None:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+    the_song.add_file(upload_file.file, upload_file.content_type)
+
+@router.get("/file/{song_id}")
+def api_get_file(song_id: str):
+    the_song:Songs = Songs.get(song_id).run() 
+    if the_song == None:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+
+    f_data,media_type = the_song.get_file()
+    print(media_type)
+    if f_data == None:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response(content=f_data, media_type=media_type)
+ 
+

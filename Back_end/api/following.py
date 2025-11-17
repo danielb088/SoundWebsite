@@ -10,7 +10,9 @@ def api_get_all():
 
 @router.post("")
 def api_add(follow: Following):
-    if Following.get(follow.id).run() != None:
+    if Following.get(follow.user_ID).run() != None:
+        return Response(status_code=status.HTTP_400_BAD_REQUEST)
+    elif Following.get(follow.follow_user_ID).run() != None:
         return Response(status_code=status.HTTP_400_BAD_REQUEST)
     else:
         follow.save()
