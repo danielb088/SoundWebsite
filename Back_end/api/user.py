@@ -50,8 +50,8 @@ def api_get(user_id: str):
 
 # Login
 @router.post("/login")
-def api_login(ul: UserLogin) :
-    the_user:User = User.get(ul.user_name).run() 
+def api_login(ul: UserLogin):
+    the_user:User = User.get(ul.email).run() 
     if the_user == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     elif the_user.password != ul.password:
