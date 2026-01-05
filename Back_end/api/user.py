@@ -1,6 +1,6 @@
 from fastapi import APIRouter,Response,status #,UploadFile
 
-from dal.user import User,UserLogin,UserFilter
+from dal.user import User,UserLogin
 
 router = APIRouter(prefix="/user")
 
@@ -28,7 +28,7 @@ def api_udpate(user: User):
         user.save()
         return user
     
-
+#delete user
 @router.delete("/{user_id}")
 def api_delete(user_id: str):
     the_user:User = User.get(user_id).run() 
@@ -60,6 +60,6 @@ def api_login(ul: UserLogin):
         return the_user
     
 # Filter users
-@router.post("/filter")
-def api_get_filter(filter:UserFilter):
-    return User.find({'dob':filter.dob,'admin':filter.admin}).run()
+# @router.post("/filter")
+# def api_get_filter(filter:UserFilter):
+#     return User.find({'dob':filter.dob,'admin':filter.admin}).run()

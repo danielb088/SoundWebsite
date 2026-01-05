@@ -5,11 +5,19 @@ import SignUpPage
 import ForgotPassword
 import Statistics
 
+from requests import post
+from fastapi import status
+
 def SignUp_click(): 
     ui.navigate.to('/SignUp')
 
-def HomePage_click(): 
-    ui.navigate.to('/HomePage')
+def HomePage_click(email,password):
+    data = {"email": email,"password": password}
+    response = post("http://127.0.0.1:8090/user/login",json=data)
+    if response.status_code == status.HTTP_200_OK:
+        ui.navigate.to('/HomePage')
+    else:
+        ui.notify("invlaid email or password")
 
 @ui.page('/',title="my login page",favicon="images/logo.png")
 def show_page():
@@ -21,11 +29,11 @@ def show_page():
         ui.label("Log in").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
     with ui.row().classes("w-full justify-center gap-5"):
         with ui.column():
-                ui.input(placeholder="Enter your first name")
-                ui.input(placeholder="Enter your last name")
+                username = ui.input(placeholder="Enter your email")
+                password = ui.input(placeholder="Enter your password", password=True)
 
     with ui.row().classes("w-full justify-center gap-5"):
-        ui.button('Log in', on_click=HomePage_click)
+        ui.button('Log in', on_click=lambda:HomePage_click(username.value,password.value))
         ui.button('Sign up', on_click=SignUp_click)
     with ui.row().classes("w-full justify-center gap-5"):
         ui.button('Forgot password', on_click=lambda: ui.notify('You are now signed up!'))

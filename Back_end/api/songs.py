@@ -1,6 +1,7 @@
 from fastapi import APIRouter,Response,status ,UploadFile
 
 from dal.songs import Songs
+from dal.songs import Songs_filter
 from dal.user import User
 
 router = APIRouter(prefix="/songs")
@@ -66,4 +67,8 @@ def api_get_file(song_id: str):
     else:
         return Response(content=f_data, media_type=media_type)
  
-
+#filter songs
+@router.post("/filter")
+def api_get_filter(filter:Songs_filter):
+    print(filter)
+    return Songs.find({"song_name": filter.song_name,"genre":filter.genre}).run()

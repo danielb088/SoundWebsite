@@ -1,6 +1,9 @@
 from random import randint
 from nicegui import ui
-import re
+from requests import post
+from fastapi import status
+
+
 
 #check
 #regex validation: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ 
@@ -11,6 +14,17 @@ import re
 def HomePage_click(): 
     ui.navigate.to('/HomePage')
 
+def Gender(gender):
+    ui.notify('You clicked '+str(gender))
+    
+
+def SignUp_click(email, f_name, l_name, year_b, password, gender): 
+    data = {"_id": email, "first_name": f_name, "last_name": l_name, "is_admin": False, "year_b": year_b,"gender": gender ,"password": password}
+    result = post("http://127.0.0.1:8090/user", json=data)
+    if result.status_code == status.HTTP_200_OK:
+        ui.navigate.to("/HomePage")
+
+
 @ui.page("/SignUp")
 def SignUp():
     ui.colors(primary='#ccf71f')
@@ -20,18 +34,15 @@ def SignUp():
             ui.icon('savings', color='primary').classes('text-5xl')
         with ui.row().classes("w-full justify-center"): 
             with ui.column().classes():     
-                ui.input(placeholder="Enter your first name")
-                ui.input(placeholder="Enter your last name")
-                ui.number(label ="Enter your age",value= 0,validation={"Age needs to be between 0 and 120": lambda value: 0 < value < 120})  
+                f_name = ui.input(placeholder="Enter your first name")
+                l_name = ui.input(placeholder="Enter your last name")
             with ui.column().classes():
-                ui.input(placeholder="Enter your email",validation={"need to contain @gmail.com": lambda value: "@gmail.com" in value})
-                ui.input(placeholder="Enter your password",password=True,password_toggle_button=True)
-                ui.input(placeholder="Enter your password again",password_toggle_button=True)   
+                email = ui.input(placeholder="Enter your email",validation={"need to contain @gmail.com": lambda value: "@gmail.com" in value})
+                password = ui.input(placeholder="Enter your password",password=True,password_toggle_button=True)
+                ui.input(placeholder="Enter your password again", password=True,password_toggle_button=True)   
         with ui.row().classes():
-            with ui.dropdown_button('Select your gender', auto_close=True):
-                    ui.item('Male', on_click=lambda: ui.notify('You clicked Male'))
-                    ui.item('Female', on_click=lambda: ui.notify('You clicked Female'))
-                    ui.item('Other', on_click=lambda: ui.notify('You clicked Other'))
-        ui.button('Sign up', on_click=HomePage_click)
+            gender = ui.select(["Male","Female","Other"], label="Gender")
+            year_b = ui.select(list(range(1970,2026)), label="Year of birth")
+        ui.button('Sign up', on_click=lambda: SignUp_click(email= str(email), f_name= str(f_name), l_name= str(l_name),year_b= year_b.value, gender=gender.value, password= str(password)))
 
             

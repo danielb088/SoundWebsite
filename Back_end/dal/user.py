@@ -4,19 +4,20 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class UserFilter(BaseModel):
-    dob: datetime
-    admin: bool
+# class UserFilter(BaseModel):
+#     dob: datetime
+#     admin: bool
 
 class UserLogin(BaseModel):
     email: str
     password: str
 
 class User(Document):
-    id: str #this
+    id: str #this is the email
     first_name: str
     last_name: str
     is_admin: bool
-    dob: datetime
+    year_b: int
+    gender:str
     password: str
 

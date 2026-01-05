@@ -5,10 +5,17 @@ from datetime import datetime
 import gridfs
 from dal.db import get_db
 
+class Songs_filter(BaseModel):
+    genre: str
+    song_name: str
+
 
 class Songs(Document):
     user_ID: str
     genre: str
+    song_name: str
+    duration: int
+    
 
     def add_file(self,file_data,content_type):
         fs = gridfs.GridFS(get_db())
