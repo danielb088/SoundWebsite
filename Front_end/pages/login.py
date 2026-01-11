@@ -16,6 +16,7 @@ def HomePage_click(email,password):
     response = post("http://127.0.0.1:8090/user/login",json=data)
     if response.status_code == status.HTTP_200_OK:
         app.storage.user.update({"user_id":response.json()['_id']})
+        app.storage.user.update({"first_name":response.json()['first_name']})
         app.storage.user.update({"is_admin":response.json()['is_admin']})
         ui.navigate.to('/HomePage')
     else:
