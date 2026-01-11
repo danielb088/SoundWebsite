@@ -26,7 +26,7 @@ def Statistics_click():
 @ui.page("/HomePage")
 def HomePage():
     is_admin = bool(app.storage.user.get("is_admin"))
-    user_id = app.storage.user.get("user_id")
+    user_id = app.storage.user.get("first_name")
     ui.label("hello "+user_id)        
     ui.colors(primary='#ccf71f')
     with ui.card().style('width: 100%'):

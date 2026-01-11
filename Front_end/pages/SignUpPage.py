@@ -23,7 +23,8 @@ def SignUp_click(email, f_name, l_name, year_b, password, gender):
     response = post("http://127.0.0.1:8090/user", json=data)
     if response.status_code == status.HTTP_200_OK:
         app.storage.user.update({"user_id":response.json()['_id']})
-        app.storage.user.update({"is_admin":response.json()['admin']})
+        app.storage.user.update({"first_name":response.json()['first_name']})
+        app.storage.user.update({"is_admin":response.json()['is_admin']})
         ui.navigate.to("/HomePage")
 
 
@@ -45,6 +46,6 @@ def SignUp():
         with ui.row().classes():
             gender = ui.select(["Male","Female","Other"], label="Gender")
             year_b = ui.select(list(range(1970,2026)), label="Year of birth")
-        ui.button('Sign up', on_click=lambda: SignUp_click(email= str(email), f_name= str(f_name), l_name= str(l_name),year_b= year_b.value, gender=gender.value, password= str(password)))
+        ui.button('Sign up', on_click=lambda: SignUp_click(email= str(email.value), f_name= str(f_name.value), l_name= str(l_name.value),year_b= year_b.value, gender=gender.value, password= str(password.value)))
 
             
