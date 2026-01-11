@@ -1,5 +1,5 @@
 from random import randint
-from nicegui import ui
+from nicegui import ui, app
 from requests import post
 from fastapi import status
 
@@ -20,8 +20,10 @@ def Gender(gender):
 
 def SignUp_click(email, f_name, l_name, year_b, password, gender): 
     data = {"_id": email, "first_name": f_name, "last_name": l_name, "is_admin": False, "year_b": year_b,"gender": gender ,"password": password}
-    result = post("http://127.0.0.1:8090/user", json=data)
-    if result.status_code == status.HTTP_200_OK:
+    response = post("http://127.0.0.1:8090/user", json=data)
+    if response.status_code == status.HTTP_200_OK:
+        app.storage.user.update({"user_id":response.json()['_id']})
+        app.storage.user.update({"is_admin":response.json()['admin']})
         ui.navigate.to("/HomePage")
 
 

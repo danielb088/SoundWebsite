@@ -1,4 +1,4 @@
-from nicegui import ui
+from nicegui import ui, app
 
 import HomePage
 import SignUpPage
@@ -15,6 +15,8 @@ def HomePage_click(email,password):
     data = {"email": email,"password": password}
     response = post("http://127.0.0.1:8090/user/login",json=data)
     if response.status_code == status.HTTP_200_OK:
+        app.storage.user.update({"user_id":response.json()['_id']})
+        app.storage.user.update({"is_admin":response.json()['admin']})
         ui.navigate.to('/HomePage')
     else:
         ui.notify("invlaid email or password")
@@ -40,4 +42,4 @@ def show_page():
     # with ui.div(style="position: fixed; bottom: 0; left: 0;"):
     # with ui.dropdown_button(auto_close=True):
     ui.slider(min=0, max=100, value=50)
-ui.run()
+ui.run(storage_secret="TheBigStien")

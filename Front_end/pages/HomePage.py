@@ -1,21 +1,21 @@
-from nicegui import ui
+from nicegui import ui, app
 from requests import get, post
 
 def Filter(row:ui.row, song_name ,genre): 
     data = {"song_name": song_name,"genre": genre}
-    result = post('http://127.0.0.1:8090/songs/filter',json=data)
+    response = post('http://127.0.0.1:8090/songs/filter',json=data)
     row.clear()
     with row:
-        for song in result.json():
+        for song in response.json():
             with ui.card():
                 ui.label(song['song_name'])
                 ui.label(song['genre'])
 
 def get_all(row:ui.row):
-    result = get('http://127.0.0.1:8090/songs/all')
+    response = get('http://127.0.0.1:8090/songs/all')
     row.clear()
     with row:
-        for u in result.json():
+        for u in response.json():
             with ui.card():
                 ui.label("name: "+u['song_name'])
                 ui.label("genre: "+u['genre'])
@@ -24,7 +24,10 @@ def Statistics_click():
     ui.navigate.to('/Statistics')
 
 @ui.page("/HomePage")
-def HomePage():        
+def HomePage():
+    is_admin = bool(app.storage.user.get("is_admin"))
+    user_id = app.storage.user.get("user_id")
+    ui.label("hello "+user_id)        
     ui.colors(primary='#ccf71f')
     with ui.card().style('width: 100%'):
         with ui.row().classes("w-full justify-center gap-5"):
