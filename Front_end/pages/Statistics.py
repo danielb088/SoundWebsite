@@ -3,7 +3,7 @@ from nicegui import ui
 def HomePage_click(): 
     ui.navigate.to('/HomePage')
 
-@ui.page('/Statistics')
+@ui.page('/Statistics', title= "statistics",favicon="images/logo.png")
 def Statistics():
     ui.colors(primary='#ccf71f')
     ui.echart({

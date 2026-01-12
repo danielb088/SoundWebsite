@@ -8,6 +8,9 @@ import Statistics
 from requests import post
 from fastapi import status
 
+def forgot_pass_click():
+    ui.navigate.to('/ForgotPassword')
+
 def SignUp_click(): 
     ui.navigate.to('/SignUp')
 
@@ -39,7 +42,7 @@ def show_page():
         ui.button('Log in', on_click=lambda:HomePage_click(username.value,password.value))
         ui.button('Sign up', on_click=SignUp_click)
     with ui.row().classes("w-full justify-center gap-5"):
-        ui.button('Forgot password', on_click=lambda: ui.notify('You are now signed up!'))
+        ui.button('Forgot password', on_click=lambda: forgot_pass_click())
     # with ui.div(style="position: fixed; bottom: 0; left: 0;"):
     # with ui.dropdown_button(auto_close=True):
     ui.slider(min=0, max=100, value=50)

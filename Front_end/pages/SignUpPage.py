@@ -28,7 +28,7 @@ def SignUp_click(email, f_name, l_name, year_b, password, gender):
         ui.navigate.to("/HomePage")
 
 
-@ui.page("/SignUp")
+@ui.page("/SignUp", title= "Signup",favicon="images/logo.png")
 def SignUp():
     ui.colors(primary='#ccf71f')
     with ui.row().classes("w-full justify-center gap-5"):

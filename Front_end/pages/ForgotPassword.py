@@ -1,6 +1,9 @@
 from nicegui import ui
 
-@ui.page("/ForgotPassword")
+def login_click():
+    ui.navigate.to('/')
+
+@ui.page("/ForgotPassword", title= "Forgot pass",favicon="images/logo.png")
 def ForgotPassword():    
     ui.colors(primary='#ccf71f')
     with ui.row().classes("w-full justify-center gap-5"):
@@ -9,3 +12,5 @@ def ForgotPassword():
         ui.input(placeholder="Email:")
     with ui.row().classes("w-full justify-center gap-5"):    
         ui.button("Send code", on_click= lambda: ui.notify("Code sent!!!"))
+    with ui.row().classes("w-full justify-center gap-5"): 
+        ui.button("back", on_click= login_click)

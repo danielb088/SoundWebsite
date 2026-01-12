@@ -23,7 +23,7 @@ def get_all(row:ui.row):
 def Statistics_click():
     ui.navigate.to('/Statistics')
 
-@ui.page("/HomePage")
+@ui.page("/HomePage", title= "Home",favicon="images/logo.png")
 def HomePage():
     is_admin = bool(app.storage.user.get("is_admin"))
     user_id = app.storage.user.get("first_name")
