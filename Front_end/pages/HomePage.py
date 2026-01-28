@@ -10,6 +10,8 @@ def Filter(row:ui.row, song_name ,genre):
             with ui.card():
                 ui.label(song['song_name'])
                 ui.label(song['genre'])
+                ui.audio('http://127.0.0.1:8090/songs/file/'+song['_id'])
+                # a.on('ended', lambda _: ui.notify('Audio playback completed'))
 
 def get_all(row:ui.row):
     response = get('http://127.0.0.1:8090/songs/all')
@@ -19,6 +21,7 @@ def get_all(row:ui.row):
             with ui.card():
                 ui.label("name: "+u['song_name'])
                 ui.label("genre: "+u['genre'])
+                ui.audio('http://127.0.0.1:8090/songs/file/'+u['_id'])
 
 def Statistics_click():
     ui.navigate.to('/Statistics')
