@@ -11,7 +11,7 @@ async def upload_song(user_id, genre, song_name, duration):
 
 async def upload_file(song_id):
     file_name = file_data.name
-    file_content = await file_data.read()
+    file_content = await file_data.read()  
     content_type = file_data.content_type
     print(file_name,content_type)
     put('http://127.0.0.1:8090/songs/file/'+song_id, files = {"file": (file_name , file_content, content_type)})

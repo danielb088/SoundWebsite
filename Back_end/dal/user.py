@@ -22,7 +22,7 @@ class User(Document):
         if len(self.password) < 5:
             return False, "Password must be at least 5 characters"
         
-        if '@' not in self.email:
+        if '@' not in self.id:
             return False, "an Email adress must contain '@' sign"
         
         return True, ""
