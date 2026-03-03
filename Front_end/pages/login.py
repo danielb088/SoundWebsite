@@ -4,6 +4,7 @@ import HomePage
 import SignUpPage
 import ForgotPassword
 import Statistics
+import UploadPage
 
 from requests import post
 from fastapi import status

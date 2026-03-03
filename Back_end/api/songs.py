@@ -26,16 +26,16 @@ def api_add(song: Songs):
 #         return Response(status_code=status.HTTP_404_NOT_FOUND)
 #     else:
 #         song.save()
-#         return song
-    
+#         return song    
 
 @router.delete("/{song_id}")
 def api_delete(song_id: str):
-    the_user:Songs = Songs.get(song_id).run() 
-    if the_user == None:
+    the_song:Songs = Songs.get(song_id).run() 
+    if the_song == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:
-        the_user.delete()
+        the_song.delete()
+        Songs.delete_file()
         return Response(status_code=status.HTTP_200_OK)
 
 # get specifc song
@@ -49,6 +49,7 @@ def api_get(song_id: str):
 
 @router.put("/file/{song_id}")
 def api_add_file(song_id: str,upload_file: UploadFile):
+    print(song_id,upload_file)
     the_song:Songs = Songs.get(song_id).run() 
     if the_song == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
@@ -58,11 +59,13 @@ def api_add_file(song_id: str,upload_file: UploadFile):
 def api_get_file(song_id: str):
     the_song:Songs = Songs.get(song_id).run() 
     if the_song == None:
+        print("1")
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     f_data,media_type = the_song.get_file()
     print(media_type)
     if f_data == None:
+        print("2")
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:
         return Response(content=f_data, media_type=media_type)

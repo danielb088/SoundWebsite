@@ -1,12 +1,6 @@
-# from pymongo import MongoClient
 from bunnet import Document
 from pydantic import BaseModel
 from datetime import datetime
-
-
-# class UserFilter(BaseModel):
-#     dob: datetime
-#     admin: bool
 
 class UserLogin(BaseModel):
     email: str
@@ -21,3 +15,14 @@ class User(Document):
     gender:str
     password: str
 
+    def validate_user(self) -> tuple[bool, str]:
+        if self.gender not in ["Male", "Female", "Other"]:
+            return False, "Gender must be Male, Female or Other"
+
+        if len(self.password) < 5:
+            return False, "Password must be at least 5 characters"
+        
+        if '@' not in self.email:
+            return False, "an Email adress must contain '@' sign"
+        
+        return True, ""

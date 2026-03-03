@@ -1,4 +1,5 @@
-from fastapi import APIRouter,Response,status #,UploadFile
+from fastapi import APIRouter,Response,status 
+from fastapi.responses import JSONResponse
 
 from dal.user import User,UserLogin
 
@@ -14,6 +15,10 @@ def api_get_all():
 def api_add(user: User):
     if User.get(user.id).run() != None:
         return Response(status_code=status.HTTP_400_BAD_REQUEST)
+    
+    valid, error_message = user.validate_user()
+    if not valid:
+        return JSONResponse(content={"error": error_message}, status_code=status.HTTP_400_BAD_REQUEST)
     else:
         user.save()
         return user
@@ -24,6 +29,8 @@ def api_udpate(user: User):
     the_user:User = User.get(user.id).run() 
     if the_user == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
+    
+    
     else:
         user.save()
         return user

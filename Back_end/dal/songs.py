@@ -16,6 +16,12 @@ class Songs(Document):
     song_name: str
     duration: int
     
+    def validate_song(self) -> tuple[bool, str]:
+        if len(self.song_name) < 2: 
+            return False, "the Songs name is too short" 
+        if self.duration < 15:
+            return False, "the song is too short"
+        True, ""
 
     def add_file(self,file_data,content_type):
         fs = gridfs.GridFS(get_db())
@@ -30,5 +36,15 @@ class Songs(Document):
         f_id = data['_id']
         output_data = fs.get(f_id).read()
         return output_data,data['contentType']
+    
+    def delete_file(self):
+        fs = gridfs.GridFS(get_db())
+        data = get_db().fs.files.find_one({'song_id':str(self.id)})
+
+        f_id = data['_id']
+
+        fs.delete(f_id)
+
+    
 
     
