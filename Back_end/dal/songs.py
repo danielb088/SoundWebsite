@@ -29,7 +29,9 @@ class Songs(Document):
 
     def get_file(self):
         fs = gridfs.GridFS(get_db())
+        print("id: "+str(self.id))
         data = get_db().fs.files.find_one({'song_id':str(self.id)})
+        print(data) # TEMP
         if data == None:
             return None,None
         
