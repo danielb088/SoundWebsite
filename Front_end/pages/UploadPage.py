@@ -1,20 +1,26 @@
 from nicegui import ui, app
 from requests import get, post, delete, put
 from asyncio import sleep
+from fastapi import status
 
 async def upload_song(user_id, genre, song_name, duration):
     data = {"user_ID": user_id, "genre": genre, "song_name": song_name, "duration": duration}
     response = post('http://127.0.0.1:8090/songs',json= data)
-    song_id = response.json()['_id']
-    await upload_file(song_id) # await a second time so the website can continue without stopping
-    ui.navigate.to("/HomePage")
+    if response.status_code == status.HTTP_200_OK:
+        song_id = response.json()['_id']
+        await upload_file(song_id) # await a second time so the website can continue without stopping
+        ui.navigate.to("/HomePage")
+    elif response.status_code == status.HTTP_409_CONFLICT:
+        ui.notify(response.json()["error"])
+    else:        
+        ui.notify("something went wrong")
 
 async def upload_file(song_id):
     file_name = file_data.name
     file_content = await file_data.read()  
     content_type = file_data.content_type
     print(file_name,content_type)
-    put('http://127.0.0.1:8090/songs/file/'+song_id, files = {"file": (file_name , file_content, content_type)})
+    put('http://127.0.0.1:8090/songs/file/'+song_id, files = {"upload_file": (file_name , file_content, content_type)})
 
 
 def update_file(event):

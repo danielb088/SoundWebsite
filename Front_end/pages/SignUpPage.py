@@ -16,7 +16,6 @@ def HomePage_click():
 
 def Gender(gender):
     ui.notify('You clicked '+str(gender))
-    
 
 def SignUp_click(email, f_name, l_name, year_b, password, gender): 
     data = {"_id": email, "first_name": f_name, "last_name": l_name, "is_admin": False, "year_b": year_b,"gender": gender ,"password": password}
@@ -26,6 +25,10 @@ def SignUp_click(email, f_name, l_name, year_b, password, gender):
         app.storage.user.update({"first_name":response.json()['first_name']})
         app.storage.user.update({"is_admin":response.json()['is_admin']})
         ui.navigate.to("/HomePage")
+    elif response.status_code == status.HTTP_409_CONFLICT:
+        ui.notify(response.json()["error"])
+    else:
+        ui.notify("something went wrong")
 
 
 @ui.page("/SignUp", title= "Signup",favicon="images/logo.png")

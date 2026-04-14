@@ -16,13 +16,18 @@ class User(Document):
     password: str
 
     def validate_user(self) -> tuple[bool, str]:
+        if not self.first_name:
+            return False, "first_name cannot be empty"
+        if not self.last_name:
+            return False, "last_name cannot be empty"
+        if not self.id:
+            return False, "email cannot be empty"
+        if not self.password:
+            return False, "password cannot be empty"
         if self.gender not in ["Male", "Female", "Other"]:
             return False, "Gender must be Male, Female or Other"
-
         if len(self.password) < 5:
             return False, "Password must be at least 5 characters"
-        
         if '@' not in self.id:
             return False, "an Email adress must contain '@' sign"
-        
         return True, ""

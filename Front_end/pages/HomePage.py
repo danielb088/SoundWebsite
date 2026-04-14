@@ -47,8 +47,8 @@ def Upload_click():
 @ui.page("/HomePage", title= "Home",favicon="images/logo.png")
 def HomePage():
     is_admin = bool(app.storage.user.get("is_admin"))
-    user_id = app.storage.user.get("first_name")
-    ui.label("hello "+user_id)        
+    user_name = app.storage.user.get("first_name")
+    ui.label("hello "+user_name)        
     ui.colors(primary='#ccf71f')
     with ui.card().style('width: 100%'):
         with ui.row().classes("w-full justify-center gap-5"):

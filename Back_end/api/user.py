@@ -2,6 +2,7 @@ from fastapi import APIRouter,Response,status
 from fastapi.responses import JSONResponse
 
 from dal.user import User,UserLogin
+from yagmail import SMTP
 
 router = APIRouter(prefix="/user")
 
@@ -18,7 +19,7 @@ def api_add(user: User):
     
     valid, error_message = user.validate_user()
     if not valid:
-        return JSONResponse(content={"error": error_message}, status_code=status.HTTP_400_BAD_REQUEST)
+        return JSONResponse(content={"error": error_message}, status_code=status.HTTP_409_CONFLICT)
     else:
         user.save()
         return user
@@ -30,8 +31,10 @@ def api_udpate(user: User):
     if the_user == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     
-    
-    else:
+    valid, error_message = user.validate_user()
+    if not valid:
+        return JSONResponse(content={"error": error_message}, status_code=status.HTTP_409_CONFLICT)
+    else: 
         user.save()
         return user
     
@@ -54,7 +57,6 @@ def api_get(user_id: str):
     else:
         return the_user
 
-
 # Login
 @router.post("/login")
 def api_login(ul: UserLogin):
@@ -70,3 +72,17 @@ def api_login(ul: UserLogin):
 # @router.post("/filter")
 # def api_get_filter(filter:UserFilter):
 #     return User.find({'dob':filter.dob,'admin':filter.admin}).run()
+
+
+@router.get("/{user_id}")
+def send_email(user_id: str):
+    the_user:User = User.get(user_id).run() 
+    if the_user == None:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+    else:
+        print("start")
+        conn = SMTP('danielbaridk@gmail.com',oauth2_file='clientsecret.json')
+        conn.send(to=str(user_id),subject="password recovery",contents=f"your password: {the_user.password}")
+        print("end")
+
+

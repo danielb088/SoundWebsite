@@ -1,4 +1,5 @@
 from fastapi import APIRouter,Response,status ,UploadFile
+from fastapi.responses import JSONResponse
 
 from dal.songs import Songs
 from dal.songs import Songs_filter
@@ -14,19 +15,26 @@ def api_get_all():
 def api_add(song: Songs):
     if User.get(song.user_ID).run() == None:
         return Response(status_code=status.HTTP_400_BAD_REQUEST)
+    valid, error_message = song.validate_song()
+    if not valid:
+        return JSONResponse(content={"error": error_message}, status_code=status.HTTP_409_CONFLICT)
     else:
         song.save()
         return song
 
-# # update
-# @router.put("")
-# def api_udpate(song: Songs):
-#     the_song:Songs = Songs.get(song.id).run() 
-#     if the_song == None:
-#         return Response(status_code=status.HTTP_404_NOT_FOUND)
-#     else:
-#         song.save()
-#         return song    
+# update
+@router.put("")
+def api_udpate(song: Songs):
+    the_song:Songs = Songs.get(song.id).run() 
+    if the_song == None:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+    
+    valid, error_message = song.validate_song()
+    if not valid:
+        return JSONResponse(content={"error": error_message}, status_code=status.HTTP_409_CONFLICT)
+    else:
+        song.save()
+        return song    
 
 @router.delete("/{song_id}")
 def api_delete(song_id: str):

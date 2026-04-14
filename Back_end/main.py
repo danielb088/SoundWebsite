@@ -1,5 +1,4 @@
 from  dal.user import User
-from dal.following import Following
 from dal.listens import Listens
 from dal.songs import Songs
 from dal.db import init_db
@@ -15,9 +14,8 @@ from api.following import router as following_router
 if __name__ == "__main__":
     uvicorn.run("main:app", port=8090,reload=True)
 else:
-    init_db([User,Following,Listens,Songs])
+    init_db([User,Listens,Songs])
     app = FastAPI()
     app.include_router(user_router)
     app.include_router(songs_router)
     app.include_router(listens_router)
-    app.include_router(following_router)
