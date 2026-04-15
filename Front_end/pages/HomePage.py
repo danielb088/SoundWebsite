@@ -6,7 +6,11 @@ from asyncio import sleep
 # MAKE SURE TO ALSO DELETE FILES
 def delete_song(id):
     delete('http://127.0.0.1:8090/songs/'+id)
+    delete('http://127.0.0.1:8090/songs/file/'+id) #CHECK IF THIS WORKS
     ui.navigate.to("/HomePage")
+
+def add_listen():
+    pass
 
 def Filter(row:ui.row, song_name ,genre): 
     is_admin = bool(app.storage.user.get("is_admin"))
@@ -19,7 +23,8 @@ def Filter(row:ui.row, song_name ,genre):
             with ui.card():
                 ui.label(song['song_name'])
                 ui.label(song['genre'])
-                ui.audio('http://127.0.0.1:8090/songs/file/'+song_id)
+                Audio = ui.audio('http://127.0.0.1:8090/songs/file/'+song_id)
+                Audio.on('play', lambda : ui.notify('Started'))
                 if is_admin:
                     ui.button('delete', on_click = lambda: delete_song(song_id))
 
@@ -34,7 +39,8 @@ def get_all(row:ui.row):
             with ui.card():
                 ui.label("name: "+song['song_name'])
                 ui.label("genre: "+song['genre'])
-                ui.audio('http://127.0.0.1:8090/songs/file/'+song_id)
+                Audio = ui.audio('http://127.0.0.1:8090/songs/file/'+song_id)
+                Audio.on('play', lambda : ui.notify('Started'))
                 if is_admin:
                     ui.button('delete', on_click= lambda:delete_song(song_id))
 
@@ -47,8 +53,8 @@ def Upload_click():
 @ui.page("/HomePage", title= "Home",favicon="images/logo.png")
 def HomePage():
     is_admin = bool(app.storage.user.get("is_admin"))
-    user_name = app.storage.user.get("first_name")
-    ui.label("hello "+user_name)        
+    name_user = app.storage.user.get("first_name")
+    ui.label("hello "+name_user)        
     ui.colors(primary='#ccf71f')
     with ui.card().style('width: 100%'):
         with ui.row().classes("w-full justify-center gap-5"):

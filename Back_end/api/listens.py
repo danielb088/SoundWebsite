@@ -2,6 +2,7 @@ from fastapi import APIRouter,Response,status #,UploadFile
 from fastapi.responses import JSONResponse
 
 from dal.listens import Listens
+from dal.user import User
 
 router = APIRouter(prefix="/listens")
 
@@ -11,8 +12,8 @@ def api_get_all():
 
 @router.post("")
 def api_add(listen: Listens):
-    if Listens.get(listen.id).run() != None:
-        return Response(status_code=status.HTTP_400_BAD_REQUEST)
+    if User.get(listen.user_ID).run() != None:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
     
     valid, error_message = listen.validate_listens()
     if not valid:

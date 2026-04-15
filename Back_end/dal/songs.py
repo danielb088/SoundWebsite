@@ -6,9 +6,8 @@ import gridfs
 from dal.db import get_db
 
 class Songs_filter(BaseModel):
-    genre: str
-    song_name: str
-
+    genre: str = ""
+    song_name: str = ""
 
 class Songs(Document):
     user_ID: str

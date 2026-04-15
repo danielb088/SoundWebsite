@@ -14,7 +14,7 @@ def api_get_all():
 @router.post("")
 def api_add(song: Songs):
     if User.get(song.user_ID).run() == None:
-        return Response(status_code=status.HTTP_400_BAD_REQUEST)
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
     valid, error_message = song.validate_song()
     if not valid:
         return JSONResponse(content={"error": error_message}, status_code=status.HTTP_409_CONFLICT)
@@ -57,7 +57,6 @@ def api_get(song_id: str):
 
 @router.put("/file/{song_id}")
 def api_add_file(song_id: str,upload_file: UploadFile):
-    print(song_id,upload_file)
     the_song:Songs = Songs.get(song_id).run() 
     if the_song == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
@@ -67,17 +66,22 @@ def api_add_file(song_id: str,upload_file: UploadFile):
 def api_get_file(song_id: str):
     the_song:Songs = Songs.get(song_id).run() 
     if the_song == None:
-        print("1")
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     f_data,media_type = the_song.get_file()
     print(media_type)
     if f_data == None:
-        print("2")
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:
         return Response(content=f_data, media_type=media_type)
- 
+
+@router.delete("/file/{song_id}")
+def api_delete_file(song_id: str):
+    the_song:Songs = Songs.get(song_id).run() 
+    if the_song == None:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+    the_song.delete_file()
+
 #filter songs
 @router.post("/filter")
 def api_get_filter(filter:Songs_filter):

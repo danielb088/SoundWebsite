@@ -74,7 +74,7 @@ def api_login(ul: UserLogin):
 #     return User.find({'dob':filter.dob,'admin':filter.admin}).run()
 
 
-@router.get("/{user_id}")
+@router.get("/pass/{user_id}")
 def send_email(user_id: str):
     the_user:User = User.get(user_id).run() 
     if the_user == None:

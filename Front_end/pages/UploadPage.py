@@ -30,7 +30,7 @@ def update_file(event):
 
 @ui.page("/UploadPage", title= "upload song",favicon="images/logo.png")
 def UploadPage():
-    user_id = app.storage.user.get("first_name")
+    user_id = app.storage.user.get("user_id")
     with ui.row().classes("w-full justify-center gap-5"):
         ui.label(text= "Upload Song")
     with ui.row().classes("w-full justify-center gap-5"):
@@ -38,5 +38,5 @@ def UploadPage():
         genre = ui.input(placeholder = "genre")
         duration = ui.input(placeholder = "duration (seconds)")#TRY TO FIND DURATION TRHOUGH THE FILE DATA INSTEAD OF ASKING THE USER
         ui.upload(label="add song file",on_upload = lambda event: update_file(event),auto_upload=True,max_files=1)
-        ui.button('upload',on_click= lambda: upload_song(user_id, genre.value, name.value, duration.value))
+        ui.button('upload',on_click= lambda: upload_song(user_id, genre.value, name.value, int(duration.value)))
 
