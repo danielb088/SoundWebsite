@@ -81,7 +81,7 @@ def send_email(user_id: str):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:
         print("start")
-        conn = SMTP('danielbaridk@gmail.com',oauth2_file='clientsecret.json')
+        conn = SMTP('danielbaridk@gmail.com',oauth2_file='c:/Users/User/Documents/clientsecret.json')
         conn.send(to=str(user_id),subject="password recovery",contents=f"your password: {the_user.password}")
         print("end")
 

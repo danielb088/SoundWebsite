@@ -43,7 +43,6 @@ def api_delete(song_id: str):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:
         the_song.delete()
-        Songs.delete_file()
         return Response(status_code=status.HTTP_200_OK)
 
 # get specifc song
@@ -69,7 +68,7 @@ def api_get_file(song_id: str):
         return Response(status_code=status.HTTP_404_NOT_FOUND)
 
     f_data,media_type = the_song.get_file()
-    print(media_type)
+    # print(media_type)
     if f_data == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:

@@ -12,15 +12,11 @@ def api_get_all():
 
 @router.post("")
 def api_add(listen: Listens):
-    if User.get(listen.user_ID).run() != None:
+    if User.get(listen.user_ID).run() == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     
-    valid, error_message = listen.validate_listens()
-    if not valid:
-        return JSONResponse(content={"error": error_message}, status_code=status.HTTP_409_CONFLICT)
-    else:
-        listen.save()
-        return listen
+    listen.save()
+    return listen
 
 # update
 @router.put("")
@@ -28,13 +24,9 @@ def api_udpate(listen: Listens):
     the_listen:Listens = Listens.get(listen.id).run() 
     if the_listen == None:
         return Response(status_code=status.HTTP_404_NOT_FOUND)
-    
-    valid, error_message = listen.validate_listens()
-    if not valid:
-        return JSONResponse(content={"error": error_message}, status_code=status.HTTP_409_CONFLICT)
-    else:
-        listen.save()
-        return listen
+
+    listen.save()
+    return listen
     
 
 @router.delete("/{listen_id}")

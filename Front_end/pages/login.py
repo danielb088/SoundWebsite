@@ -12,7 +12,7 @@ from fastapi import status
 def forgot_pass_click():
     ui.navigate.to('/ForgotPassword')
 
-def SignUp_click(): 
+def SignUp_click():
     ui.navigate.to('/SignUp')
 
 def HomePage_click(email,password):

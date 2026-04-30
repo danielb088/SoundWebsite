@@ -1,19 +1,21 @@
 from nicegui import ui, app
 from requests import get, post, delete, put
 from asyncio import sleep
+from datetime import datetime
 
-
-# MAKE SURE TO ALSO DELETE FILES
 def delete_song(id):
     delete('http://127.0.0.1:8090/songs/'+id)
-    delete('http://127.0.0.1:8090/songs/file/'+id) #CHECK IF THIS WORKS
+    delete('http://127.0.0.1:8090/songs/file/'+id)
     ui.navigate.to("/HomePage")
 
-def add_listen():
-    pass
+def add_listen(user_id, song_id):
+    data = {"user_ID": str(user_id), "time": str((datetime.now())), "song_ID": str(song_id)}
+    post('http://127.0.0.1:8090/listens', json=data)
+
 
 def Filter(row:ui.row, song_name ,genre): 
     is_admin = bool(app.storage.user.get("is_admin"))
+    user_id = str(app.storage.user.get("user_id"))
     data = {"song_name": song_name,"genre": genre}
     response = post('http://127.0.0.1:8090/songs/filter',json=data)
     row.clear()
@@ -24,13 +26,13 @@ def Filter(row:ui.row, song_name ,genre):
                 ui.label(song['song_name'])
                 ui.label(song['genre'])
                 Audio = ui.audio('http://127.0.0.1:8090/songs/file/'+song_id)
-                Audio.on('play', lambda : ui.notify('Started'))
+                Audio.on('play', lambda : add_listen(user_id, song_id))
                 if is_admin:
                     ui.button('delete', on_click = lambda: delete_song(song_id))
-
                 
 def get_all(row:ui.row):
     is_admin = bool(app.storage.user.get("is_admin"))
+    user_id = str(app.storage.user.get("user_id"))
     response = get('http://127.0.0.1:8090/songs/all')
     row.clear()
     with row:
@@ -40,7 +42,7 @@ def get_all(row:ui.row):
                 ui.label("name: "+song['song_name'])
                 ui.label("genre: "+song['genre'])
                 Audio = ui.audio('http://127.0.0.1:8090/songs/file/'+song_id)
-                Audio.on('play', lambda : ui.notify('Started'))
+                Audio.on('play', lambda : add_listen(user_id, song_id))
                 if is_admin:
                     ui.button('delete', on_click= lambda:delete_song(song_id))
 

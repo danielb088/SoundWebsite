@@ -1,20 +1,23 @@
-from nicegui import ui
+from nicegui import ui, app
+from requests import get
 
 def HomePage_click(): 
     ui.navigate.to('/HomePage')
 
 @ui.page('/Statistics', title= "statistics",favicon="images/logo.png")
 def Statistics():
-    ui.colors(primary='#ccf71f')
-    ui.echart({
-    'xAxis': {'type': 'value'},
-    'yAxis': {'type': 'category', 'data': ['A', 'B'], 'inverse': True},
-    'legend': {'textStyle': {'color': 'gray'}},
-    'series': [
-        {'type': 'bar', 'name': 'Current year', 'data': [0.1, 0.2]},
-        {'type': 'bar', 'name': 'Last year', 'data': [0.3, 0.4]},
-    ],
-    })
-
-    with ui.row().classes('w-full justify-center'):
-        ui.button("Back", on_click=HomePage_click)
+    name_user = app.storage.user.get("first_name")
+    ui.label("hello "+name_user)        
+    with ui.card().style('width: 100%'):
+        with ui.row().classes("w-full justify-center gap-5"):
+            ui.label("Statistics").style('font-family: Comic Sans MS; font-size: 30px; font-weight: bold;')
+    result = get('http://127.0.0.1:8090/listens/all')
+    grid = ui.aggrid({
+                    'columnDefs': [
+                        {'headerName': 'user_id', 'field': 'user_ID','filter':True},
+                        {'headerName': 'time', 'field': 'time'},
+                        {'headerName': 'song_id', 'field': 'song_ID'},
+                    ],
+                    'rowData': result.json() 
+                },theme='balham')
+        
