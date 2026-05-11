@@ -46,5 +46,5 @@ def show_page():
         ui.button('Forgot password', on_click=lambda: forgot_pass_click())
     # with ui.div(style="position: fixed; bottom: 0; left: 0;"):
     # with ui.dropdown_button(auto_close=True):
-    ui.slider(min=0, max=100, value=50)
+    # ui.slider(min=0, max=100, value=50)
 ui.run(storage_secret="TheBigStien")
