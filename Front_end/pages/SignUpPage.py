@@ -31,13 +31,12 @@ def SignUp_click(email, f_name, l_name, year_b, password, gender):
         ui.notify("something went wrong")
 
 
-@ui.page("/SignUp", title= "Signup",favicon="images/logo.png")
+@ui.page("/SignUp", title= "Signup",favicon="images/logo2.png")
 def SignUp():
-    ui.colors(primary='#ccf71f')
+    ui.colors(primary="#ae20c4")
     with ui.row().classes("w-full justify-center gap-5"):
         with ui.card().tight():     
-            ui.label("SoundNimbostratus").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
-            ui.icon('savings', color='primary').classes('text-5xl')
+            ui.label("Sign up").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
         with ui.row().classes("w-full justify-center"): 
             with ui.column().classes():     
                 f_name = ui.input(placeholder="Enter your first name")

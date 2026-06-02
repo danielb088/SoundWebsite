@@ -78,11 +78,11 @@ def api_login(ul: UserLogin):
 def send_email(user_id: str):
     the_user:User = User.get(user_id).run() 
     if the_user == None:
+        print("test1")
+        print(the_user)
         return Response(status_code=status.HTTP_404_NOT_FOUND)
     else:
         print("start")
         conn = SMTP('danielbaridk@gmail.com',oauth2_file='c:/Users/User/Documents/clientsecret.json')
         conn.send(to=str(user_id),subject="password recovery",contents=f"your password: {the_user.password}")
         print("end")
-
-

@@ -14,14 +14,14 @@ def send_password(user_id):
         
     
 
-@ui.page("/ForgotPassword", title= "Forgot pass",favicon="images/logo.png")
+@ui.page("/ForgotPassword", title= "Forgot pass",favicon="images/logo2.png")
 def ForgotPassword():
-    ui.colors(primary='#ccf71f')
+    ui.colors(primary="#ae20c4")
     with ui.row().classes("w-full justify-center gap-5"):
         ui.label("Enter your Email: ").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
     with ui.row().classes("w-full justify-center gap-5"):
         user_id = ui.input(placeholder="Email:")
     with ui.row().classes("w-full justify-center gap-5"):    
-        ui.button("Send password", on_click= lambda: send_password(str(user_id)))
+        ui.button("Send password", on_click= lambda: send_password(user_id.value))
     with ui.row().classes("w-full justify-center gap-5"): 
         ui.button("back", on_click= login_click)

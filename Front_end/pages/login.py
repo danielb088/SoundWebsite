@@ -26,11 +26,11 @@ def HomePage_click(email,password):
     else:
         ui.notify("invlaid email or password")
 
-@ui.page('/',title="my login page",favicon="images/logo.png")
+@ui.page('/',title="my login page",favicon="images/logo2.png")
 def show_page():
     with ui.row().classes("w-full justify-center"):
-        ui.colors(primary='#ccf71f')
-        ui.image("images/logo.png").classes("w-32")
+        ui.colors(primary="#ae20c4")
+        ui.image("images/logo2.png").classes("w-32")
 
     with ui.row().classes("w-full justify-center gap-5"):
         ui.label("Log in").style('font-family: Comic Sans MS; font-size: 37px; font-weight: bold;')
@@ -47,4 +47,4 @@ def show_page():
     # with ui.div(style="position: fixed; bottom: 0; left: 0;"):
     # with ui.dropdown_button(auto_close=True):
     # ui.slider(min=0, max=100, value=50)
-ui.run(storage_secret="TheBigStien")
+ui.run(storage_secret="my secret")

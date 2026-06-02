@@ -52,17 +52,16 @@ def Statistics_click():
 def Upload_click():
     ui.navigate.to("/UploadPage")
 
-@ui.page("/HomePage", title= "Home",favicon="images/logo.png")
+@ui.page("/HomePage", title= "Home",favicon="images/logo2.png")
 def HomePage():
     is_admin = bool(app.storage.user.get("is_admin"))
     name_user = app.storage.user.get("first_name")
     ui.label("hello "+name_user)        
-    ui.colors(primary='#ccf71f')
+    ui.colors(primary="#ae20c4")
     with ui.card().style('width: 100%'):
         with ui.row().classes("w-full justify-center gap-5"):
             if is_admin:
                 ui.button("Statistics", on_click=Statistics_click)
-            ui.input(placeholder="Search:")
             ui.label("Sound").style('font-family: Comic Sans MS; font-size: 30px; font-weight: bold;')
     with ui.row().classes("w-full justify-center gap-5"):
         ui.label("Your songs:")

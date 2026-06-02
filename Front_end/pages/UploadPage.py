@@ -28,8 +28,9 @@ def update_file(event):
     file_data = event.file
 
 
-@ui.page("/UploadPage", title= "upload song",favicon="images/logo.png")
+@ui.page("/UploadPage", title= "upload song",favicon="images/logo2.png")
 def UploadPage():
+    ui.colors(primary="#ae20c4")
     user_id = app.storage.user.get("user_id")
     with ui.row().classes("w-full justify-center gap-5"):
         ui.label(text= "Upload Song")

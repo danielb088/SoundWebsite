@@ -4,8 +4,9 @@ from requests import get
 def HomePage_click(): 
     ui.navigate.to('/HomePage')
 
-@ui.page('/Statistics', title= "statistics",favicon="images/logo.png")
+@ui.page('/Statistics', title= "statistics",favicon="images/logo2.png")
 def Statistics():
+    ui.colors(primary="#ae20c4")
     name_user = app.storage.user.get("first_name")
     ui.label("hello "+name_user)        
     with ui.card().style('width: 100%'):
